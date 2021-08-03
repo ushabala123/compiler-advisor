@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compileradvisor schemaVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="compileradvisor.xsd">
+  <!--
+        POLICY: Options will be considered in the below priority.
+    devices->families->cores 
+    i.e. 
+    •	when device is present, option is considered for device only.
+    •	when device, family is present, option is considered for device only.
+    •	when device not present and family is present, option is considered for devices that belong to the family. 
+    •	when device not present, family, core is present, option is considered for devices that belong to the family.
+    when device, family not present, core is present, option is considered for devices that belong to the core.
+    
+    VERSION POLICY:
+    This attribute specifies a version range with the minimum and maximum supported versions. The version range notation is [10.0 - 11.0], where
+    •	[ - minimum version inclusive.
+    •	] - maximum version inclusive.
+    •	( - minimum version exclusive.
+    •	) - maximum version exclusive.
+    Single version # - only the specified version.
+
+    -->
+  <toolchains>
+    <toolchain name="XC8">
+      <options>
+        <!-- XC8-PIC: Options (-O1, -O2)
+         XC8-AVR: options (-O1, -O2, -Os, -O3, -Os -mrelax, -Os -mlto, -Os -mrelax -mlto)
+        -->
+        <option name="Config 1" version="[2.30-"  cores="^(AVR)">
+            <documentation>
+				<property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-855CC1A3-FE78-49E5-BC35-4985B8F6D982"/> 
+			</documentation>
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-O1"/>                         
+            </optionConfiguration>
+			<optionConfiguration optid="XC8-config-global">      
+                <property key="wpo-lto" value="false"/>                         
+            </optionConfiguration>
+        </option>
+		<option name="Config 1" version="[2.30-" cores="^(?!AVR)">
+            <documentation>
+				<property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-BB433107-FD4E-4D28-BB58-9D4A58955B1A-en-US-2/index.html?GUID-855CC1A3-FE78-49E5-BC35-4985B8F6D982"/> 
+			</documentation>
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-O1"/>                         
+            </optionConfiguration>
+        </option>
+        <option name="Config 2" version="[2.30-" cores="^(AVR)">
+            <documentation>
+				<property title="-O2" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-83550D5E-D208-4F32-ACA9-57C55E70918F"/> 
+			</documentation>
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration>
+			<optionConfiguration optid="XC8-config-global">      
+                <property key="wpo-lto" value="false"/>                         
+            </optionConfiguration>
+        </option>
+		<option name="Config 2" version="[2.30-" cores="^(?!AVR)">
+            <documentation>
+				<property title="-O2" link="https://onlinedocs.microchip.com/pr/GUID-BB433107-FD4E-4D28-BB58-9D4A58955B1A-en-US-2/index.html?GUID-83550D5E-D208-4F32-ACA9-57C55E70918F"/> 
+			</documentation>
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration>
+        </option>
+        <option name="PRO Comparison" version="[2.30-" procomparison="true" cores="^(?!AVR)">
+			<optionConfiguration optid="XC8-config-global">      
+                <additionalOptions>-mafrlcsj</additionalOptions>                            
+            </optionConfiguration>
+        </option>
+        <option name="Config A" version="[2.30-" cores="^(AVR)" license="true">
+            <documentation>
+				<property title="-O3" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-563E8311-F59A-448F-BDD9-FEC22ED125E5"/> 
+			</documentation>
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-O3"/>                         
+            </optionConfiguration>
+			<optionConfiguration optid="XC8-config-global">      
+                <property key="wpo-lto" value="false"/>                         
+            </optionConfiguration>
+        </option>
+		<option name="Config A" version="[2.30-" cores="^(?!AVR)" license="true">
+            <documentation>
+				<property title="-O3" link="https://onlinedocs.microchip.com/pr/GUID-BB433107-FD4E-4D28-BB58-9D4A58955B1A-en-US-2/index.html?GUID-563E8311-F59A-448F-BDD9-FEC22ED125E5"/> 
+			</documentation> 
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-O3"/>                         
+            </optionConfiguration>
+        </option>
+        <option name="Config B" version="[2.30-" cores="^(AVR)" license="true">
+            <documentation>
+				<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-8714C734-1788-40E9-B768-40487E9061F5"/> 
+			</documentation> 
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-Os"/>                         
+            </optionConfiguration>
+			<optionConfiguration optid="XC8-config-global">      
+                <property key="wpo-lto" value="false"/>                         
+            </optionConfiguration>
+        </option>
+		<option name="Config B" version="[2.30-" cores="^(?!AVR)" license="true">
+            <documentation>
+				<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-BB433107-FD4E-4D28-BB58-9D4A58955B1A-en-US-2/index.html?GUID-8714C734-1788-40E9-B768-40487E9061F5"/> 
+			</documentation> 
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-Os"/>                         
+            </optionConfiguration>
+        </option>
+        
+        <option name="Config C" version="[2.30-" cores="^(AVR)" license="true">
+            <documentation>
+				<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-8714C734-1788-40E9-B768-40487E9061F5"/>
+				<property title="-mrelax" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-C702ED70-CED0-4A8F-A1CE-4FFE3956A17D"/>
+			</documentation> 
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-Os"/>                         
+            </optionConfiguration>
+			<optionConfiguration optid="XC8-config-global">      
+                <property key="wpo-lto" value="false"/>                         
+            </optionConfiguration>
+            <optionConfiguration optid="XC8-config-global">      
+                <additionalOptions>-mrelax</additionalOptions>                            
+            </optionConfiguration>
+        </option>
+        <option name="Config D" version="[2.30-" cores="^(AVR)" license="true">
+            <documentation>
+				<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-8714C734-1788-40E9-B768-40487E9061F5"/>
+				<property title="-flto" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-34E9482A-3D97-49A2-BB5D-A610A0C88279"/>
+			</documentation> 
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-Os"/>                         
+            </optionConfiguration>
+			<optionConfiguration optid="XC8-config-global">      
+                <property key="wpo-lto" value="false"/>                         
+            </optionConfiguration>
+            <optionConfiguration optid="XC8-config-global">      
+                <additionalOptions>-flto</additionalOptions>                            
+            </optionConfiguration>
+        </option>
+        <option name="Config E" version="[2.30-" cores="^(AVR)" license="true">
+            <documentation>
+				<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-8714C734-1788-40E9-B768-40487E9061F5"/>
+				<property title="-mrelax" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-C702ED70-CED0-4A8F-A1CE-4FFE3956A17D"/>
+				<property title="-flto" link="https://onlinedocs.microchip.com/pr/GUID-BD1C16C8-7FA3-4D73-A4BE-241EE05EF592-en-US-2/index.html?GUID-34E9482A-3D97-49A2-BB5D-A610A0C88279"/>				
+			</documentation>
+			<optionConfiguration optid="HI-TECH-COMP">      
+                <property key="optimization-level" value="-Os"/>                         
+            </optionConfiguration>
+			<optionConfiguration optid="XC8-config-global">      
+                <property key="wpo-lto" value="false"/>                         
+            </optionConfiguration>
+            <optionConfiguration optid="XC8-config-global">      
+                <additionalOptions>-mrelax -flto</additionalOptions>                            
+            </optionConfiguration>
+        </option>
+      </options>
+    </toolchain>
+    <toolchain name="XC16">
+      <options>
+        <option name="Config 1" version="[1.26-">
+            <documentation>
+                <property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+            </documentation>
+            <optionConfiguration optid="C30">
+                <property key="code-model" value="default"/>
+                <property key="data-model" value="default"/>
+                <property key="scalar-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>      
+                <property key="optimization-level" value="1"/>                        
+            </optionConfiguration>
+        </option>
+        <option name="Config 2" version="[1.26-">
+            <documentation>
+                <property title="-O2" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+            </documentation> 
+            <optionConfiguration optid="C30">
+                <property key="code-model" value="default"/>
+                <property key="data-model" value="default"/>
+                <property key="scalar-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>      
+                <property key="optimization-level" value="2"/>                      
+            </optionConfiguration>
+        </option>
+        <option name="Config 3" version="[1.26-">
+            <documentation>
+		<property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+                <property title="-mlarge-data" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>
+                <property title="-msmall-scalar" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+            </documentation> 
+            <optionConfiguration optid="C30">
+                <property key="code-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>
+                <property key="optimization-level" value="1"/>
+                <property key="data-model" value="large-data"/>
+                <property key="scalar-model" value="small-scalar"/>                    
+            </optionConfiguration>
+        </option>
+        <option name="Config 4" version="[1.26-">
+            <documentation>
+                <property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+                <property title="-msmall-code" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>
+                <property title="-msmall-data" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+            </documentation> 
+            <optionConfiguration optid="C30"> 
+                <property key="scalar-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>     
+                <property key="optimization-level" value="1"/>
+                <property key="code-model" value="small-code"/>
+                <property key="data-model" value="small-data"/>                     
+            </optionConfiguration>
+        </option>
+        <option name="Config 5" version="[1.26-">
+            <documentation>
+                <property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+		<property title="-msmall-code" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>
+		<property title="-mlarge-data" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>
+		<property title="-msmall-scalar" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+            </documentation> 
+            <optionConfiguration optid="C30">
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>      
+                <property key="optimization-level" value="1"/>
+                <property key="code-model" value="small-code"/>
+                <property key="data-model" value="large-data"/>
+                <property key="scalar-model" value="small-scalar"/>                     
+            </optionConfiguration>
+	</option>
+        <option name="PRO Comparison" version="[1.26-" procomparison="true">
+            <optionConfiguration optid="C30Global">      
+                <additionalOptions>-mafrlcsj</additionalOptions>                            
+            </optionConfiguration>
+        </option>
+        
+        <option name="Config A" version="[1.26-" license="true">
+            <documentation>
+		<property title="-O3" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+            </documentation> 
+            <optionConfiguration optid="C30">  
+                <property key="code-model" value="default"/>
+                <property key="data-model" value="default"/>
+                <property key="scalar-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>    
+                <property key="optimization-level" value="3"/>                       
+            </optionConfiguration>
+        </option>
+        <option name="Config B" version="[1.26-" license="true">
+            <documentation>
+		<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+            </documentation> 
+            <optionConfiguration optid="C30">      
+                <property key="code-model" value="default"/>
+                <property key="data-model" value="default"/>
+                <property key="scalar-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>
+                <property key="optimization-level" value="s"/>                      
+            </optionConfiguration>
+        </option>
+        
+        <option name="Config C" version="[1.26-" license="true">
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+                <property title="-mlarge-data" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>
+                <property title="-msmall-scalar" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+            </documentation> 
+            <optionConfiguration optid="C30">
+                <property key="code-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>
+                <property key="optimization-level" value="s"/>
+                <property key="data-model" value="large-data"/>
+                <property key="scalar-model" value="small-scalar"/>                    
+            </optionConfiguration>
+        </option>
+        <option name="Config D" version="[1.26-" license="true">
+            <documentation>
+		<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+		<property title="-msmall-code" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>
+		<property title="-msmall-data" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+            </documentation> 
+            <optionConfiguration optid="C30">  
+                <property key="scalar-model" value="default"/>
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>   
+                <property key="optimization-level" value="s"/>
+                <property key="code-model" value="small-code"/>
+                <property key="data-model" value="small-data"/>                            
+            </optionConfiguration>
+        </option>
+        <option name="Config E" version="[1.26-" license="true">
+            <documentation>
+		<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+		<property title="-msmall-code" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>
+		<property title="-mlarge-data" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+		<property title="-msmall-scalar" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+            </documentation> 
+            <optionConfiguration optid="C30">  
+                <property key="enable-procedural-abstraction" value="false"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>    
+                <property key="optimization-level" value="s"/>
+                <property key="code-model" value="small-code"/>
+                <property key="data-model" value="large-data"/>
+                <property key="scalar-model" value="small-scalar"/>                     
+            </optionConfiguration>
+	</option>
+        <option name="Config F" version="[1.26-" license="true">
+            <documentation>
+		<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-725B92D0-6B5D-4E0F-9928-7A2670764D69"/>
+		<property title="-mpa" link="https://onlinedocs.microchip.com/pr/GUID-C4E60FF5-3DAB-44F1-BA61-4BD962D8F469-en-US-1/index.html?GUID-157B0580-C051-4D6A-AF7B-7B41745D5884"/>				
+            </documentation> 
+            <optionConfiguration optid="C30">   
+                <property key="code-model" value="default"/>
+                <property key="data-model" value="default"/>
+                <property key="scalar-model" value="default"/>
+                <property key="oXC16gcc-mpa-lvl" value=""/>  
+                <property key="optimization-level" value="s"/>
+                <property key="enable-procedural-abstraction" value="true"/>                          
+            </optionConfiguration>
+        </option>
+        
+      </options>
+    </toolchain>
+    <toolchain name="XC32">
+      <!--
+Arch   Options	License ShortName Description
+
+XC32-ARM	 	 	 	 
+ 	-O1	False	O1	O1
+ 	-O2	False	O2	O2
+ 	<FREE/PRO comparison>	False	
+    -O1 True    O1  O1
+    -O2 True    O2  O2
+ 	-Os	True	Os	Os
+ 	-O3	True	O3	O3
+ 	-Os -flto	True	Os LTO	Os with Link Time Optimization
+ 	-Os -mpa	True	Os PA	Os with Procedural Abstraction
+XC32-MIPS	 	 	 	 
+ 	-O1	False	O1	O1
+ 	-O2	False	O2	O2
+ 	<FREE/PRO comparison>	False	 	 
+XC32-MIPS (for devices that support the microMIPS ISA):	 	 	 	 
+ 	-O1	False	O1	O1
+ 	-O2	False	O2	O2
+ 	-Os	True	Os	Os
+ 	-O3	True	O3	O3
+ 	-Os -flto	True	Os LTO	Os with Link Time Optimization
+ 	-Os -mmicromips	True	Os MicroMIPS	Os with MicroMIPS ISA
+ 	-Os -flto -mmicromips	True	Os MicroMIPS LTO	-Os with MicroMIPS ISA and Link-Time Optimization
+XC32-MIPS (for devices that support the MIPS16 ISA):	 	 	 	 
+ 	-O1	False	O1	O1
+ 	-O2	False	O2	O2
+ 	-Os	True	Os	Os
+    -O3 True    O3  O3
+ 	-Os -flto	True	Os LTO	Os with Link-Time Optimization
+ 	-Os -mmips16	True	Os MIPS16	Os with MIPS16 ISA
+ 	-Os -flto -mmips16	True	Os MIPS16 LTO	OS with MIPS16 ISA and Link-Time Optimization     
+      -->
+      <options>
+        <!-- O1: applicable for XC32-ARM FREE--> 
+        <option name="Config 1" version="[3.0-" cores="^(Cortex|ARM)">  
+            <documentation>
+		<property title="-O1" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+            </documentation> 
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O1"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O1"/>                        
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O1"/>
+            </optionConfiguration>  
+        </option>
+        <!-- O2: applicable for XC32-ARM FREE--> 
+	    <option name="Config 2" version="[3.0-" cores="^(Cortex|ARM)">
+            <documentation>
+                <property title="-O2" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+            </documentation>  
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration> 
+        </option>
+        <!-- O1: applicable for XC32-ARM PRO -->
+        <option name="Config A" version="[3.0-" cores="^(Cortex|ARM)" license="true">   
+            <documentation>
+                <property title="-O1" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+            </documentation>  
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O1"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O1"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O1"/>
+            </optionConfiguration>  
+        </option>  
+        <!-- O2: applicable for XC32-ARM PRO -->
+        <option name="Config B" version="[3.0-" cores="^(Cortex|ARM)" license="true">   
+            <documentation>
+                <property title="-O2" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+            </documentation>  
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O2"/>
+            </optionConfiguration>  
+        </option>     
+        <!-- O3: applicable for XC32-ARM PRO -->
+        <option name="Config C" version="[3.0-" cores="^(Cortex|ARM)" license="true">   
+            <documentation>
+                <property title="-O3" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+            </documentation>  
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O3"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O3"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O3"/>
+            </optionConfiguration>  
+        </option>
+        <!-- Os: applicable for XC32-ARM PRO--> 
+	<option name="Config D" version="[3.0-" license="true" cores="^(Cortex|ARM)">
+            <documentation>
+		<property title="-Os" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+            </documentation>  
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>  
+        </option>
+        <!-- Os flto: applicable for XC32-ARM PRO-->
+	<option name="Config E" version="[3.0-" license="true" cores="^(Cortex|ARM)">
+            <documentation>
+		<property title="-Os" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+		<property title="-flto" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>				
+            </documentation> 
+            <optionConfiguration optid="C32Global">  
+                <property key="wpo-lto" value="false"/>
+                <additionalOptions>-flto</additionalOptions>              
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>  
+        </option>  
+        <!-- Os PA: applicable for XC32-ARM PRO-->
+        <option name="Config F" version="[3.0-" cores="^(Cortex|ARM)" license="true">
+            <documentation>
+                <property title="-Os" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>
+		<property title="-mpa" link="https://ww1.microchip.com/downloads/en/DeviceDoc/XC32_PICC_UG_DS50002895A.pdf"/>				
+            </documentation> 
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>
+                <additionalOptions>-mpa</additionalOptions>              
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+            </optionConfiguration>  
+        </option>        
+                
+        <!-- O1: applicable for XC32-MIPS FREE --> 
+        <option name="Config 1" version="[3.0-" cores="^(?!(Cortex|ARM))">  
+            <documentation>
+                <property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O1"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O1"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>                         
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O1"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>  
+        </option>
+        <!-- O2: applicable for XC32-MIPS FREE --> 
+        <option name="Config 2" version="[3.0-" cores="^(?!(Cortex|ARM))">
+            <documentation>
+                <property title="-O2" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O2"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O2"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O2"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration> 
+        </option>  
+        <!-- O1: applicable for XC32-MIPS PRO --> 
+        <option name="Config A" version="[3.0-" license="true" cores="^(?!(Cortex|ARM))">  
+            <documentation>
+                <property title="-O1" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O1"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O1"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>                         
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O1"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>  
+        </option>
+        <!-- O2: applicable for XC32-MIPS PRO --> 
+        <option name="Config B" version="[3.0-" license="true" cores="^(?!(Cortex|ARM))">
+            <documentation>
+		<property title="-O2" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O2"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O2"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O2"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration> 
+        </option>       
+        <!-- O3: applicable for XC32-MIPS[microMIPS] -->        
+        <option name="Config C" version="[3.0-" families="^(PIC32MK|PIC32MM|PIC32MZ)" license="true">  
+            <documentation>
+                <property title="-O3" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>  
+        </option>
+        <option name="Config C" version="[3.0-" devices="^(BT5507FPGA|MEC14|PIC32PR|PIC32WK|UPD402|USB)" license="true"> 
+            <documentation>
+                <property title="-O3" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>  
+        </option>     
+         <!-- O3: applicable for XC32-MIPS[MIPS16] -->        
+        <option name="Config C" version="[3.0-" families="^(PIC32MX)" license="true">  
+            <documentation>
+                <property title="-O3" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-16-bit-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-16-bit-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-16-bit-code" value="false"/>
+            </optionConfiguration>  
+        </option>
+        <option name="Config C" version="[3.0-" devices="^(MGC3|MTCH)" license="true"> 
+            <documentation>
+                <property title="-O3" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-16-bit-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-16-bit-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-O3"/>
+                <property key="generate-16-bit-code" value="false"/>
+            </optionConfiguration>  
+        </option>            
+        <!-- Os: applicable for XC32-MIPS PRO -->  
+        <option name="Config D" version="[3.0-" license="true" cores="^(?!(Cortex|ARM))">
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+            </documentation>   
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>  
+        </option>
+        <!-- Os flto: applicable for XC32-MIPS PRO --> 
+		<option name="Config E" version="[3.0-" license="true" cores="^(?!(Cortex|ARM))">
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+		<property title="-flto" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>				
+            </documentation> 
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/> 
+                <additionalOptions>-flto</additionalOptions>              
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="false"/>
+                <property key="generate-micro-compressed-code" value="false"/>
+            </optionConfiguration>  
+        </option>	        
+        <!-- Os MicroMIPS: applicable for XC32-MIPS[microMIPS] -->
+        <option name="Config F" version="[3.0-" families="^(PIC32MK|PIC32MM|PIC32MZ)" license="true">
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+		<property title="-mmicromips" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+            </documentation>    
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">  
+                <property key="generate-micro-compressed-code" value="true"/> 
+            </optionConfiguration>
+        </option>
+        <option name="Config F" version="[3.0-" devices="^(BT5507FPGA|MEC14|PIC32PR|PIC32WK|UPD402|USB)" license="true">  
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+                <property title="-mmicromips" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+            </documentation>    
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">      
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>
+        </option>        
+        <!-- Os flto MicroMIPS: applicable for XC32-MIPS[microMIPS] -->
+        <option name="Config G" version="[3.0-" families="^(PIC32MK|PIC32MM|PIC32MZ)" license="true">
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+                <property title="-mmicromips" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+		<property title="-flto" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>				
+            </documentation> 
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/> 
+                <additionalOptions>-flto</additionalOptions>              
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>    
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">  
+                <property key="generate-micro-compressed-code" value="true"/> 
+            </optionConfiguration>
+        </option>
+        <option name="Config G" version="[3.0-" devices="^(BT5507FPGA|MEC14|PIC32PR|PIC32WK|UPD402|USB)" license="true">
+            <documentation>
+		<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+		<property title="-mmicromips" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+		<property title="-flto" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>				
+            </documentation> 
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/> 
+                <additionalOptions>-flto</additionalOptions>              
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>    
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-micro-compressed-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">  
+                <property key="generate-micro-compressed-code" value="true"/> 
+            </optionConfiguration>
+        </option>
+        <!-- Os mmips16: applicable for XC32-MIPS[MIPS16] -->
+        <option name="Config F" version="[3.0-" families="^(PIC32MX)" license="true"> 
+            <documentation>
+		<property title="-Os" link=",https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+		<property title="-mips16" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+            </documentation>    
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration> 
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>    
+                <property key="generate-16-bit-code" value="true"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">  
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+        </option>
+        <option name="Config F" version="[3.0-" devices="^(MGC3|MTCH)" license="true">
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+                <property title="-mips16" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+            </documentation>     
+            <optionConfiguration optid="C32Global"> 
+                <property key="wpo-lto" value="false"/>             
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>    
+                <property key="generate-16-bit-code" value="true"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/>
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">  
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+        </option>
+        <!-- Os mmips16 flto: applicable for XC32-MIPS[MIPS16] -->
+        <option name="Config G" version="[3.0-" families="^(PIC32MX)" license="true">
+            <documentation>
+		<property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+		<property title="-mips16" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+		<property title="-flto" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>				
+            </documentation>  
+            <optionConfiguration optid="C32Global">  
+                <property key="wpo-lto" value="false"/> 
+                <additionalOptions>-flto</additionalOptions>              
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>    
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">  
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+        </option>
+        <option name="Config G" version="[3.0-" devices="^(MGC3|MTCH)" license="true">
+            <documentation>
+                <property title="-Os" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>
+		<property title="-mips16" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-3ECB631A-FA05-4C8D-8582-97952DD1A455"/>				
+		<property title="-flto" link="https://onlinedocs.microchip.com/pr/GUID-471BA167-B55F-488B-A1CC-D88BAA7832CA-en-US-1/index.html?GUID-49E46C44-9615-4408-90AA-E9F4EA5C771E"/>				
+            </documentation> 
+            <optionConfiguration optid="C32Global">  
+                <property key="wpo-lto" value="false"/> 
+                <additionalOptions>-flto</additionalOptions>              
+            </optionConfiguration>
+            <optionConfiguration optid="C32"> 
+                <property key="optimization-level" value="-Os"/>    
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-CPP">      
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+            <optionConfiguration optid="C32-LD">   
+                <property key="optimization-level" value="-Os"/>
+                <property key="generate-16-bit-code" value="true"/>
+            </optionConfiguration>  
+            <optionConfiguration optid="C32-AS">  
+                <property key="generate-16-bit-code" value="true"/> 
+            </optionConfiguration>
+        </option>     
+        <!-- PRO comparison option applicable for all ARM|MIPS devices supported by xc32 FREE--> 
+        <option name="PRO Comparison" version="[3.0-" procomparison="true">
+            <optionConfiguration optid="C32Global"> 
+                <additionalOptions>-mafrlcsj</additionalOptions>              
+            </optionConfiguration>
+        </option>    
+      </options>
+    </toolchain>
+  </toolchains>
+</compileradvisor>
